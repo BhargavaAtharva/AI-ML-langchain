@@ -60,64 +60,121 @@ def handle_user_input(user_question):
 def main():
     st.set_page_config(page_title="RAG with Gemini ⚡️", page_icon="📄", layout="wide")
     st.markdown("""
-        <style>
-            .stApp {
-                background: linear-gradient(110deg, #010101, #0a1f44, #1e6091);
-                color: white;
-                font-family: 'Poppins', sans-serif;
-            }
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-            .title-container {
-                text-align: center;
-                margin-bottom: 10px;
-            }
-            .title-container h1 {
-                font-family: 'Poppins', sans-serif;
-                font-weight: 700;
-            }
-            .title-container p {
-                font-family: 'Poppins', sans-serif;
-                font-weight: 300;
-                font-size: 16px;
-            }
-            .chat-message {
-                display: flex;
-                align-items: flex-start;
-                gap: 12px;
-                margin: 10px 0;
-            }
-            .chat-bubble {
-                border-radius: 12px;
-                padding: 12px 15px;
-                max-width: 80%;
-                line-height: 1.4;
-                font-size: 15px;
-            }
-            .user-bubble {
-                background-color: rgba(0, 123, 255, 0.2);
-                border-left: 4px solid #00b4d8;
-                align-self: flex-end;
-            }
-            .assistant-bubble {
-                background-color: rgba(255, 255, 255, 0.1);
-                border-left: 4px solid #ffd166;
-            }
-            .animated-bar {
-                height: 5px;
-                width: 100%;
-                background: linear-gradient(-45deg, #000000, #0077b6, #48cae4);
-                background-size: 400% 400%;
-                animation: gradientMove 10s ease infinite;
-                margin-bottom: 20px;
-                border-radius: 10px;
-            }
-            @keyframes gradientMove {
-                0% {background-position: 0% 50%;}
-                50% {background-position: 100% 50%;}
-                100% {background-position: 0% 50%;}
-            }
-        </style>
-    """, unsafe_allow_html=True)
+    <style>
+        /* App background and fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        .stApp {
+            background: linear-gradient(90deg, #4a4a4a, #000000);
+            color: #d3d3d3;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Title styling */
+        .title-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .title-container h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #cccccc;
+            margin-bottom: 5px;
+        }
+        .title-container p {
+            font-weight: 400;
+            font-size: 1rem;
+            color: #aaaaaa;
+        }
+
+        /* Animated gradient bar */
+        .animated-bar {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(90deg, #555555, #222222, #555555);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        @keyframes gradientMove {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        /* Chat bubbles */
+        .chat-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .chat-bubble {
+            border-radius: 12px;
+            padding: 12px 16px;
+            max-width: 75%;
+            line-height: 1.4;
+            font-size: 15px;
+            word-wrap: break-word;
+            backdrop-filter: blur(3px);
+        }
+        .user-bubble {
+            background-color: rgba(200, 200, 200, 0.15);
+            border-left: 3px solid #888888;
+            align-self: flex-end;
+            color: #f0f0f0;
+        }
+        .assistant-bubble {
+            background-color: rgba(50, 50, 50, 0.2);
+            border-left: 3px solid #cccccc;
+            align-self: flex-start;
+            color: #f0f0f0;
+        }
+
+        /* Sidebar styling */
+        .css-1d391kg {
+            background-color: #1a1a1a;
+            color: #cccccc;
+            font-family: 'Poppins', sans-serif;
+        }
+        .css-1d391kg h2, .css-1d391kg h3 {
+            color: #bbbbbb;
+        }
+
+        /* Input box styling */
+        .stTextInput>div>div>input {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: #eeeeee !important;
+            border-radius: 10px;
+            border: 1px solid #555555;
+            padding: 8px 12px;
+            transition: all 0.3s ease;
+        }
+        .stTextInput>div>div>input:focus {
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 6px rgba(200,200,200,0.4);
+        }
+
+        /* Buttons styling */
+        .stButton>button {
+            background-color: #333333;
+            color: #dddddd;
+            border-radius: 12px;
+            border: none;
+            padding: 10px 22px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .stButton>button:hover {
+            background-color: #555555;
+            cursor: pointer;
+            transform: scale(1.03);
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
